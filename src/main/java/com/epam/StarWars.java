@@ -7,10 +7,10 @@ package com.epam;
 
  Using http://swapi.co website, create a simple app that collects information about all major characters from Star Wars movies:
 
- 1. Name
- 2. Race
- 3. Favourite vehicle / ship
- 4. Planet of birth
+ 1. Name : "name"
+ 2. Race : "species"
+ 3. Favourite vehicle / ship : "vehicles" / "starships"
+ 4. Planet of birth : "homeworld"
  */
 public class StarWars
 {
