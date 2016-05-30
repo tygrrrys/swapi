@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import org.testng.log4testng.Logger;
 
 import java.io.IOException;
@@ -15,8 +16,8 @@ import java.net.URL;
 /**
  * Unit test for simple StarWars.
  */
-public class StarWarsTest {
-    Logger testLog = Logger.getLogger(StarWarsTest.class);
+public class HandleConnectionTest {
+    Logger testLog = Logger.getLogger(HandleConnectionTest.class);
 
     @BeforeTest
     public void testIfConnectingToSwapiGives200() {
@@ -41,37 +42,27 @@ public class StarWarsTest {
     @Test
     public void testIfConnectToSwapiReturnsActuallyTrue () throws MalformedURLException {
         final URL SWAPI = new URL("https://swapi.co/api/");
-        OpenConnection connection = new OpenConnection (SWAPI);
+        HandleConnection connection = new HandleConnection(SWAPI);
         boolean isAccomplished = connection.connectToWebsite();
 
-        assertThat(isAccomplished).isTrue();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(isAccomplished, true);
+        softAssert.assertNotEquals(connection.connection, null);
+        softAssert.assertAll();
     }
 
 
     @Test
     public void testIfConnectToInvalidURLReturnsFalse () throws MalformedURLException {
         final URL SWAPI = new URL("https://swapi.co/api/100");
-        OpenConnection connection = new OpenConnection (SWAPI);
+        HandleConnection connection = new HandleConnection(SWAPI);
         boolean isAccomplished = connection.connectToWebsite();
 
-        assertThat(isAccomplished).as("trying to connect to unexisting URL").isFalse();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(isAccomplished, false);
+        softAssert.assertNotEquals(connection.connection, null);
+        softAssert.assertAll();
     }
 
-    @Test
-    public void testIfLukeDataIsFetched() {
 
-        StarWars connect = new StarWars();
-        StringBuilder lukeInfo = new StringBuilder();
-        try {
-            final URL LUKE = new URL("https://swapi.co/people/1");
-
-            CreateContent lukesData = new CreateContent(LUKE);
-            lukesData.connectToWebsite();
-        } catch (MalformedURLException e) {
-            testLog.error("Check URL passed to test case. " + e.getMessage());
-        } catch (IOException e) {
-            testLog.error("Couldn't open connection to Luke's data. " +e.getMessage());
-        }
-
-    }
 }
