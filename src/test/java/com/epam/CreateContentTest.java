@@ -32,7 +32,7 @@ public class CreateContentTest {
     }
 
     @Test
-    public void testIfLukesDataIsFetched(){
+    public void testIfLukesDataIsFetched() throws Exception{
         try {
             final URL LUKE = new URL("http://swapi.co/api/people/1/");
             CreateContent lukesData = new CreateContent(LUKE);

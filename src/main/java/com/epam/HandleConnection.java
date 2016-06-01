@@ -1,23 +1,21 @@
 package com.epam;
 
-import java.io.IOException;
+
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
+import java.net.URI;
 import java.util.logging.Logger;
 
 /**
  * Class connecting to URL passed through constructor.
  */
 public class HandleConnection {
-    URL website;
+    URI website;
     Logger logger = Logger.getLogger("HandleConnection.class");
 
     static HttpURLConnection connection;
     static String content;
 
-    public HandleConnection(URL website) {
+    public HandleConnection(URI website) {
         this.website = website;
 
     }
@@ -40,21 +38,9 @@ public class HandleConnection {
      */
     protected boolean connectToWebsite() {
 
-        try {
-            connection = (HttpURLConnection) website.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("User-Agent", "application/json");
-            content = connection.getContent().toString();
-            return connection.getResponseCode() == HttpURLConnection.HTTP_OK;
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Cannot connect to given URL! "+e.getMessage());
-        }
+
         return false;
     }
 
-    public static void main(String[] args) throws MalformedURLException {
-        HandleConnection test = new HandleConnection(new URL("http://swapi.co/api/people/1/"));
-        System.out.println(content);
-    }
 }
 
